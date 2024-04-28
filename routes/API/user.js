@@ -37,7 +37,7 @@ router.post("/", ({ body }, res) => {
 });
 
 router.put("/:id", ({ body, params }, res) => {
-    User.findOneAndUpdate({ _id: req.params.id }, body, { new: true, runValidators: true })
+    User.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
         .then((data) => {
             if (!data) {
                 res.status(404).json({ message: "No user found with this id" });
@@ -58,7 +58,7 @@ router.delete("/:id", async ({ params }, res) => {
         })
     });
 
-    User.findOneAndDelete({ _id: req.params.id })
+    User.findOneAndDelete({ _id: params.id })
         .then(() => {
             res.json({ message: "The user and Thoughts has been deleted" });
         })
