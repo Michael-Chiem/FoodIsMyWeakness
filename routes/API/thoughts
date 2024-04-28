@@ -40,5 +40,18 @@ router.post("/:userId", ({ params, body }, res) => {
         });
 });
 
+router.post("/:thoughtId/reactions/", ({ params, body }, res) => {
+    Thought.findOneAndUpdate(
+        {_id: params.thoughtId},
+        {$push: { reactions: body } },
+        {new: true, runValidators: true},
+    ).then((data) =>
+    {
+        if (!data) {
+            res.status(404).json({ message: "No data found!" });
+            return
+    };
+    res.json(data)}).catch((err) => {if (err) throw err})
+});
 
-
+module.exports = router;
